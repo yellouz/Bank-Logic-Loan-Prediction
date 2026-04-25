@@ -1,7 +1,8 @@
 import pandas as pd
 import os
 from sklearn.model_selection import train_test_split
-
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score
 
 print("[System] Initializing Training Sequence...")
 
@@ -31,3 +32,39 @@ X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_
 print(f"Study Material (X_train): {X_train.shape[0]} customers")
 print(f"Final Exam (X_test): {X_test.shape[0]} customers")
 print("\n[System] Ready for the algorithm. Awaiting Dev B.")
+
+# --- 4. THE BRAIN: Training the Algorithm ---
+print("\n[System] Injecting Algorithm: Random Forest...")
+
+# Initialize the model (We set random_state=42 so you and Dev B get the exact same math)
+model = RandomForestClassifier(random_state=42)
+
+# Teaching the machine (This is the actual "Learning" command)
+model.fit(X_train, Y_train)
+print("[System] Training Complete.")
+
+# --- 5. THE FINAL EXAM: Testing the Algorithm ---
+print("\n[System] Administering Final Exam to the AI...")
+
+# We give the AI the Test details (X_test), but we hide the answers (Y_test)
+predictions = model.predict(X_test)
+
+# --- 6. GRADING THE EXAM ---
+# Now we compare the AI's guesses against the real, hidden answers
+score = accuracy_score(Y_test, predictions)
+
+print("=========================================")
+print(f"🏆 AI Accuracy Score: {score * 100:.2f}%")
+print("=========================================")
+
+# --- 7. PEEKING INTO THE AI'S BRAIN ---
+print("\n[System] Analyzing AI Decision Making...")
+
+# We ask the model to rank how important each column was
+importance = pd.DataFrame({
+    'Feature': X.columns,
+    'Importance': model.feature_importances_
+}).sort_values(by='Importance', ascending=False)
+
+print("\n🏆 Top 3 Most Important Factors for getting a Loan:")
+print(importance.head(3))
