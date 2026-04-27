@@ -3,6 +3,7 @@ import os
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
+import joblib
 
 print("[System] Initializing Training Sequence...")
 
@@ -36,8 +37,9 @@ print("\n[System] Ready for the algorithm. Awaiting Dev B.")
 # --- 4. THE BRAIN: Training the Algorithm ---
 print("\n[System] Injecting Algorithm: Random Forest...")
 
-# Initialize the model (We set random_state=42 so you and Dev B get the exact same math)
-model = RandomForestClassifier(random_state=42)
+# We are changing 'n_estimators' (the number of decision-makers) from 100 to 250
+# We are also adding 'max_depth' so they don't overthink and memorize the data
+model = RandomForestClassifier(n_estimators=250, max_depth=10, random_state=42)
 
 # Teaching the machine (This is the actual "Learning" command)
 model.fit(X_train, Y_train)
@@ -68,3 +70,12 @@ importance = pd.DataFrame({
 
 print("\n🏆 Top 3 Most Important Factors for getting a Loan:")
 print(importance.head(3))
+
+# --- 8. FREEZING THE BRAIN ---
+print("\n[System] Saving the trained model...")
+
+# We save the 'model' variable into a physical file in your models folder
+model_path = os.path.join(script_dir, '..', 'models', 'loan_model.pkl')
+joblib.dump(model, model_path)
+
+print(f"[Success] AI Brain saved to: {model_path}")
