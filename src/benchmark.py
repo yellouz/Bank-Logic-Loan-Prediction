@@ -33,7 +33,7 @@ models = {
     "Logistic Reg": LogisticRegression(random_state=42),
     "Decision Tree": DecisionTreeClassifier(random_state=42),
     "SVM": SVC(random_state=42),
-    "Random Forest": RandomForestClassifier(n_estimators=250, max_depth=10, random_state=42)
+    "Random Forest": RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42, min_samples_split=2, class_weight=None) # Using the best settings from our Grid Search
 }
 
 names = []
